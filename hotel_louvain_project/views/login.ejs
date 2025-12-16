@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Connexion – Hôtel Louvain</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <header class="navbar">
-      <div class="navbar-left">
-        <a href="/" class="brand">Hôtel Louvain</a>
-        <a href="/rooms">Chambres</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion – Hôtel Louvain</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a class="navlink" href="/">Accueil</a>
+        <a class="navlink" href="/rooms">Chambres</a>
       </div>
-      <div class="navbar-right">
-        <a href="/login">Connexion</a>
-        <a href="/register">Inscription</a>
+
+      <div class="nav-right">
+        <a class="navbtn" href="/register">Inscription</a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="content">
-      <h1>Connexion</h1>
+  <main class="main">
+    <div class="shell">
+      <section class="panel">
+        <h1 class="h1">Connexion</h1>
+        <p class="muted">Connectez-vous pour réserver et consulter vos réservations.</p>
 
-      <% if (error) { %>
-        <p class="error"><%= error %></p>
-      <% } %>
+        <% if (error) { %>
+          <div class="error"><%= error %></div>
+        <% } %>
 
-      <form method="POST" action="/login" class="form-box">
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Mot de passe
-          <input type="password" name="password" required />
-        </label>
+        <form method="POST" action="/login" class="form">
+          <div class="row">
+            <label>Email</label>
+            <input type="email" name="email" required />
+          </div>
 
-        <button type="submit" class="btn">Se connecter</button>
-      </form>
-    </main>
-  </body>
+          <div class="row">
+            <label>Mot de passe</label>
+            <input type="password" name="password" required />
+          </div>
+
+          <button class="btn" type="submit">Se connecter</button>
+        </form>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">Hôtel Louvain</footer>
+</div>
+</body>
 </html>

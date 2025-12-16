@@ -1,84 +1,107 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title><%= room.name %> – Hôtel Louvain</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <header class="navbar">
-      <div class="navbar-left">
-        <a href="/" class="brand">Hôtel Louvain</a>
-        <a href="/rooms">Chambres</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= room.name %> – Hôtel Louvain</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="page">
+
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a class="navlink" href="/">Accueil</a>
+        <a class="navlink" href="/rooms">Chambres</a>
         <% if (user) { %>
-          <a href="/my-reservations">Mes réservations</a>
+          <a class="navlink" href="/my-reservations">Mes réservations</a>
         <% } %>
       </div>
-      <div class="navbar-right">
+
+      <div class="nav-right">
         <% if (user) { %>
-          <span class="navbar-user">Bonjour, <%= user.username %></span>
-          <a href="/logout">Déconnexion</a>
+          <span class="pill"><%= user.username %></span>
+          <a class="navlink" href="/logout">Déconnexion</a>
         <% } else { %>
-          <a href="/login">Connexion</a>
-          <a href="/register">Inscription</a>
+          <a class="navlink" href="/login">Connexion</a>
+          <a class="navbtn" href="/register">Inscription</a>
         <% } %>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="content">
-      <h1><%= room.name %></h1>
+  <!-- CONTENU -->
+  <main class="main">
+    <div class="shell">
+      <section class="panel">
+        <h1 class="h1"><%= room.name %></h1>
 
-      <% if (room.imageUrl) { %>
-        <img src="<%= room.imageUrl %>" alt="Photo de la chambre" class="room-image" />
-      <% } %>
+        <!-- IMAGE GRAND FORMAT AVEC FALLBACK -->
+        <img
+          src="<%= room.imageUrl || '' %>"
+          alt="<%= room.name %>"
+          class="room-img-large"
+          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80';"
+        />
 
-      <p>Type : <%= room.type %></p>
-      <p>Capacité : <%= room.capacity %> personne(s)</p>
-      <p>Prix : <strong><%= room.pricePerNight %> € / nuit</strong></p>
-
-      <% if (room.description) { %>
-        <p><%= room.description %></p>
-      <% } %>
-
-      <% if (room.amenities && room.amenities.length > 0) { %>
-        <p>Équipements :</p>
-        <ul>
-          <% room.amenities.forEach(function (a) { %>
-            <li><%= a %></li>
-          <% }) %>
-        </ul>
-      <% } %>
-
-      <h2>Réserver cette chambre</h2>
-
-      <% if (!user) { %>
-        <p>
-          Vous devez être connecté pour réserver.
-          <a href="/login">Connexion</a>
+        <p class="muted">
+          Type : <strong><%= room.type %></strong>
+          • Capacité : <strong><%= room.capacity %></strong>
         </p>
-      <% } else { %>
-        <form method="POST" action="/rooms/<%= room._id %>/reserve" class="form-box">
-          <label>
-            Date d'arrivée
-            <input type="date" name="checkIn" required />
-          </label>
-          <label>
-            Date de départ
-            <input type="date" name="checkOut" required />
-          </label>
-          <label>
-            Nombre de personnes
-            <input
-              type="number"
-              name="guests"
-              min="1"
-              max="<%= room.capacity %>"
-              required
-            />
-          </label>
-          <button type="submit" class="btn">Réserver</button>
-        </form>
-      <% } %>
-    </main>
-  </body>
+
+        <p style="margin-top:10px;">
+          <strong><%= room.pricePerNight %> € / nuit</strong>
+        </p>
+
+        <% if (room.description) { %>
+          <p class="muted" style="margin-top:10px;"><%= room.description %></p>
+        <% } %>
+
+        <% if (room.amenities && room.amenities.length) { %>
+          <p class="muted" style="margin-top:10px;">
+            Équipements : <strong><%= room.amenities.join(", ") %></strong>
+          </p>
+        <% } %>
+
+        <% if (error) { %>
+          <div class="error" style="margin-top:14px;"><%= error %></div>
+        <% } %>
+
+        <h3 style="margin-top:16px;">Réserver</h3>
+
+        <% if (!user) { %>
+          <p class="muted" style="margin-top:8px;">
+            Vous devez être connecté pour réserver.
+            <a class="link" href="/login">Connexion</a>
+          </p>
+        <% } else { %>
+          <form class="form" method="POST" action="/rooms/<%= room._id %>/reserve" style="margin-top:12px;">
+            <div class="row">
+              <label>Arrivée</label>
+              <input type="date" name="checkIn" required />
+            </div>
+
+            <div class="row">
+              <label>Départ</label>
+              <input type="date" name="checkOut" required />
+            </div>
+
+            <div class="row">
+              <label>Invités</label>
+              <input type="number" name="guests" min="1" max="<%= room.capacity %>" required />
+            </div>
+
+            <button class="btn" type="submit">Confirmer la réservation</button>
+          </form>
+        <% } %>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">Hôtel Louvain</footer>
+</div>
+</body>
 </html>

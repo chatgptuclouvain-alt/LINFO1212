@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Réservation confirmée – Hôtel Louvain</title>
+  <title>Annuler une réservation – Hôtel Louvain</title>
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
@@ -27,35 +27,43 @@
   <main class="main">
     <div class="shell">
       <section class="panel">
-        <h1 class="h1">Réservation confirmée ✅</h1>
+        <h1 class="h1">Annulation de réservation</h1>
 
-        <p class="muted" style="margin-top:6px;">
-          Votre réservation a bien été enregistrée.
-        </p>
+        <% if (error) { %>
+          <div class="error"><%= error %></div>
+        <% } %>
 
         <div class="card" style="margin-top:14px;">
           <div class="top">
-            <h3><%= room.name %></h3>
+            <h3><%= reservation.roomId ? reservation.roomId.name : "Chambre" %></h3>
             <span class="badge"><%= reservation.status %></span>
           </div>
 
-          <p class="muted" style="margin-top:10px;">
+          <p class="muted" style="margin-top:8px;">
             Arrivée : <strong><%= new Date(reservation.checkIn).toLocaleDateString('fr-BE') %></strong><br/>
             Départ : <strong><%= new Date(reservation.checkOut).toLocaleDateString('fr-BE') %></strong><br/>
             Invités : <strong><%= reservation.guests %></strong>
           </p>
 
-          <p style="margin-top:10px;">
-            <strong><%= room.pricePerNight %> € / nuit</strong><br/>
-            Nuits : <strong><%= nights %></strong><br/>
-            Total : <strong><%= totalPrice %> €</strong>
+          <p class="muted" style="margin-top:12px;">
+            Règle : annulation possible uniquement si la date d’arrivée est dans plus de <strong>48h</strong>.
           </p>
-        </div>
 
-        <div style="margin-top:14px;">
-          <a class="btn" href="/my-reservations">Voir mes réservations</a>
-        </div>
+          <% if (canCancel) { %>
+            <form method="POST" action="/reservations/<%= reservation._id %>/cancel" style="margin-top:14px;">
+              <button class="btn" type="submit">Confirmer l'annulation</button>
+              <a class="navlink" style="margin-left:8px;display:inline-block;" href="/my-reservations">Retour</a>
+            </form>
+          <% } else { %>
+            <div style="margin-top:14px;">
+              <span class="muted">Annulation impossible : délai de 48h non respecté.</span>
+              <div style="margin-top:10px;">
+                <a class="btn" href="/my-reservations">Retour</a>
+              </div>
+            </div>
+          <% } %>
 
+        </div>
       </section>
     </div>
   </main>

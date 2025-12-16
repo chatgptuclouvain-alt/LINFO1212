@@ -1,55 +1,44 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Accueil – Hôtel Louvain</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <header class="navbar">
-      <div class="navbar-left">
-        <a href="/" class="brand">Hôtel Louvain</a>
-        <a href="/rooms">Chambres</a>
-        <% if (user) { %>
-          <a href="/my-reservations">Mes réservations</a>
-        <% } %>
-      </div>
-      <div class="navbar-right">
-        <% if (user) { %>
-          <span class="navbar-user">Bonjour, <%= user.username %></span>
-          <a href="/logout">Déconnexion</a>
-        <% } else { %>
-          <a href="/login">Connexion</a>
-          <a href="/register">Inscription</a>
-        <% } %>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accueil – Hôtel Louvain</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
 
-    <main class="content">
-      <h1>Bienvenue à l'Hôtel Louvain</h1>
-      <p>Cette application permet de réserver une chambre en ligne.</p>
+<section class="landing">
+  <div class="landing-card">
 
-      <section>
-        <h2>Quelques chambres disponibles</h2>
-        <div class="card-grid">
-          <% if (rooms && rooms.length > 0) { %>
-            <% rooms.forEach(function (room) { %>
-              <article class="card">
-                <h3><%= room.name %></h3>
-                <p>Type : <%= room.type %></p>
-                <p><strong><%= room.pricePerNight %> € / nuit</strong></p>
-                <a href="/rooms/<%= room._id %>">Voir les détails</a>
-              </article>
-            <% }) %>
-          <% } else { %>
-            <p>Aucune chambre n'est encore enregistrée.</p>
-          <% } %>
-        </div>
+    <h1 class="big">Hôtel Louvain</h1>
 
-        <p class="center">
-          <a href="/rooms" class="btn">Voir toutes les chambres</a>
-        </p>
-      </section>
-    </main>
-  </body>
+    <p class="sub">
+      Réservez votre séjour en ligne.
+      Consultez nos chambres et gérez vos réservations facilement.
+    </p>
+
+    <div class="actions">
+      <!-- Les deux boutons sont gris et identiques -->
+      <a class="btn btn-ghost" href="/rooms">Hôtel Louvain</a>
+      <a class="btn btn-ghost" href="/rooms">Chambres</a>
+    </div>
+
+    <!-- Connexion / Inscription bien séparé des boutons -->
+    <div style="margin-top:34px; opacity:0.95;">
+      <% if (user) { %>
+        <a style="text-decoration:underline" href="/my-reservations">Mes réservations</a>
+        &nbsp;•&nbsp;
+        <a style="text-decoration:underline" href="/logout">Déconnexion</a>
+      <% } else { %>
+        <a style="text-decoration:underline" href="/login">Connexion</a>
+        &nbsp;•&nbsp;
+        <a style="text-decoration:underline" href="/register">Inscription</a>
+      <% } %>
+    </div>
+
+  </div>
+</section>
+
+</body>
 </html>

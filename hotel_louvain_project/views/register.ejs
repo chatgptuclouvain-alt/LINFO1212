@@ -1,52 +1,66 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Inscription – Hôtel Louvain</title>
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
-    <header class="navbar">
-      <div class="navbar-left">
-        <a href="/" class="brand">Hôtel Louvain</a>
-        <a href="/rooms">Chambres</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inscription – Hôtel Louvain</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a class="navlink" href="/">Accueil</a>
+        <a class="navlink" href="/rooms">Chambres</a>
       </div>
-      <div class="navbar-right">
-        <a href="/login">Connexion</a>
-        <a href="/register">Inscription</a>
+
+      <div class="nav-right">
+        <a class="navlink" href="/login">Connexion</a>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="content">
-      <h1>Inscription</h1>
+  <main class="main">
+    <div class="shell">
+      <section class="panel">
+        <h1 class="h1">Inscription</h1>
+        <p class="muted">Créez un compte pour réserver une chambre.</p>
 
-      <% if (error) { %>
-        <p class="error"><%= error %></p>
-      <% } %>
+        <% if (error) { %>
+          <div class="error"><%= error %></div>
+        <% } %>
 
-      <form method="POST" action="/register" class="form-box">
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
+        <form method="POST" action="/register" class="form">
+          <div class="row">
+            <label>Email</label>
+            <input type="email" name="email" required />
+          </div>
 
-        <label>
-          Nom d'utilisateur
-          <input type="text" name="username" required />
-        </label>
+          <div class="row">
+            <label>Nom d'utilisateur</label>
+            <input type="text" name="username" required />
+          </div>
 
-        <label>
-          Mot de passe
-          <input type="password" name="password" required />
-        </label>
+          <div class="row">
+            <label>Mot de passe</label>
+            <input type="password" name="password" required />
+          </div>
 
-        <label>
-          Confirmation du mot de passe
-          <input type="password" name="confirmPassword" required />
-        </label>
+          <div class="row">
+            <label>Confirmation</label>
+            <input type="password" name="confirmPassword" required />
+          </div>
 
-        <button type="submit" class="btn">Créer le compte</button>
-      </form>
-    </main>
-  </body>
+          <button class="btn" type="submit">Créer le compte</button>
+        </form>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">Hôtel Louvain</footer>
+</div>
+</body>
 </html>
